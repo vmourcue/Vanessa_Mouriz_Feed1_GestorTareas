@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Vanessa_Mouriz_Feed1_GestorTareas" parent="Base.Theme.Vanessa_Mouriz_Feed1_GestorTareas" />
+
+    <!-- Tema para la Toolbar: la flecha de volver y los iconos del menú
+         se pintan del mismo color que el título -->
+    <style name="ThemeOverlay.GestorTareas.Toolbar" parent="">
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
 </resources>

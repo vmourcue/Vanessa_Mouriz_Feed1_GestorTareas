@@ -1,53 +1,52 @@
 package com.example.vanessa_mouriz_feed1_gestortareas;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import java.util.ArrayList;
 
 /**
  * Activity principal: muestra todas las tareas guardadas en la BD en un ListView.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
+    // Clave del extra con el que EditarTareaActivity nos devuelve el mensaje
+    public static final String EXTRA_RESULTADO = "resultado";
 
     private ListView listViewTareas;
     private TextView textViewVacio;
+    private Button buttonNuevaTarea;
     private TareasDBHelper dbHelper;
     private TareaAdapter adapter;
+
+    // Lanzador para abrir EditarTareaActivity y recibir su resultado
+    private ActivityResultLauncher<Intent> editarTareaLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_main);
-
-        // Usamos nuestra Toolbar como ActionBar de la Activity
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // La Toolbar ocupa también la zona de la barra de estado;
-        // el resto de la pantalla deja hueco para las barras del sistema.
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
-            toolbar.setPadding(0, systemBars.top, 0, 0);
-            return insets;
-        });
+        configurarToolbar(false);
 
         listViewTareas = findViewById(R.id.listViewTareas);
         textViewVacio = findViewById(R.id.textViewVacio);
+        buttonNuevaTarea = findViewById(R.id.buttonNuevaTarea);
 
         dbHelper = new TareasDBHelper(this);
+
+        // Registramos el callback que procesará lo que devuelva EditarTareaActivity
+        editarTareaLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::procesarResultadoEdicion);
 
         // Cuando se marca o desmarca el CheckBox, guardamos el cambio en la BD y recargamos
         adapter = new TareaAdapter(this, new ArrayList<>(), (tarea, completada) -> {
@@ -58,14 +57,17 @@ public class MainActivity extends AppCompatActivity {
         listViewTareas.setAdapter(adapter);
         listViewTareas.setEmptyView(textViewVacio);
 
-        // De momento, al pulsar una tarea solo mostramos su título.
-        // Más adelante abrirá la pantalla de detalle.
+        // Al pulsar una tarea abrimos su detalle (Intent explícito con el id como extra)
         listViewTareas.setOnItemClickListener((parent, view, position, id) -> {
             Tarea tarea = adapter.getItem(position);
             if (tarea != null) {
-                Toast.makeText(this, tarea.getTitulo(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, DetalleTareaActivity.class);
+                intent.putExtra(EXTRA_ID_TAREA, tarea.getId());
+                startActivity(intent);
             }
         });
+
+        buttonNuevaTarea.setOnClickListener(v -> abrirNuevaTarea());
     }
 
     // onResume se ejecuta cada vez que la Activity vuelve a primer plano,
@@ -79,6 +81,23 @@ public class MainActivity extends AppCompatActivity {
     private void cargarTareas() {
         adapter.clear();
         adapter.addAll(dbHelper.getTodasTareas());
+    }
+
+    private void abrirNuevaTarea() {
+        // Sin el extra del id, EditarTareaActivity sabe que es una tarea nueva
+        Intent intent = new Intent(this, EditarTareaActivity.class);
+        editarTareaLauncher.launch(intent);
+    }
+
+    // Callback: se ejecuta al volver de EditarTareaActivity
+    private void procesarResultadoEdicion(ActivityResult result) {
+        if (result.getResultCode() != Activity.RESULT_OK) {
+            return; // El usuario volvió atrás sin guardar
+        }
+        Intent data = result.getData();
+        if (data != null && data.hasExtra(EXTRA_RESULTADO)) {
+            Toast.makeText(this, data.getStringExtra(EXTRA_RESULTADO), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

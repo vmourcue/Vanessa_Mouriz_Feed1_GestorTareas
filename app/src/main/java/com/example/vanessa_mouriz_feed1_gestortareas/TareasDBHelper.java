@@ -16,7 +16,9 @@ import java.util.List;
 public class TareasDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "tareas.db";
-    private static final int DATABASE_VERSION = 1;
+    // Versión 2: cambio la categoría "Casa" por "Familia" y las tareas de ejemplo.
+    // Al subir el número, Android llama a onUpgrade() y la tabla se vuelve a crear.
+    private static final int DATABASE_VERSION = 2;
 
     // Tabla y columnas
     public static final String TABLE_TAREAS = "tareas";
@@ -47,14 +49,24 @@ public class TareasDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
 
         // Inserto unas tareas de ejemplo para que la lista no aparezca vacía la primera vez
-        insertarEjemplo(db, "Entregar el ejercicio de feedback",
+        insertarEjemplo(db, "Estudiar la unidad 3 de Programación dirigida por eventos",
+                "Tareas en segundo plano, notificaciones y alarmas", Tarea.CATEGORIA_ESTUDIOS, false);
+        insertarEjemplo(db, "Entregar el ejercicio de feedback 1",
                 "Subir el código al repositorio y generar el APK", Tarea.CATEGORIA_ESTUDIOS, false);
-        insertarEjemplo(db, "Hacer la compra",
-                "Leche, pan, fruta y verdura", Tarea.CATEGORIA_CASA, false);
-        insertarEjemplo(db, "Preparar la reunión del lunes",
-                "Revisar el estado de los proyectos", Tarea.CATEGORIA_TRABAJO, false);
-        insertarEjemplo(db, "Llamar al dentista",
-                "Pedir cita para revisión", Tarea.CATEGORIA_PERSONAL, true);
+        insertarEjemplo(db, "Preparar el informe de estado del proyecto",
+                "Avance, riesgos y próximos hitos para el comité de seguimiento", Tarea.CATEGORIA_TRABAJO, false);
+        insertarEjemplo(db, "Revisar los SLA de las incidencias abiertas",
+                "Comprobar las incidencias cerca de incumplir el SLA y escalar si hace falta", Tarea.CATEGORIA_TRABAJO, false);
+        insertarEjemplo(db, "Llevar al niño a extraescolares",
+                "Lunes, miércoles y viernes a las 18:00", Tarea.CATEGORIA_FAMILIA, false);
+        insertarEjemplo(db, "Reservar pista para el partido con mi hijo",
+                "Sábado a las 10:00", Tarea.CATEGORIA_FAMILIA, false);
+        insertarEjemplo(db, "Ir a la clase de tenis",
+                "Lunes, miércoles y jueves a las 20:00", Tarea.CATEGORIA_PERSONAL, false);
+        insertarEjemplo(db, "Pedir cita con el oftalmólogo para el niño",
+                "", Tarea.CATEGORIA_FAMILIA, true);
+        insertarEjemplo(db, "Pedir cita con el dermatólogo",
+                "", Tarea.CATEGORIA_PERSONAL, true);
     }
 
     // Aquí uso el db que recibe onCreate. No puedo llamar a addTarea() porque

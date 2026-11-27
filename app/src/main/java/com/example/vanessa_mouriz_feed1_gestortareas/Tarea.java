@@ -10,10 +10,10 @@ public class Tarea {
     public static final String CATEGORIA_PERSONAL = "Personal";
     public static final String CATEGORIA_TRABAJO = "Trabajo";
     public static final String CATEGORIA_ESTUDIOS = "Estudios";
-    public static final String CATEGORIA_CASA = "Casa";
+    public static final String CATEGORIA_FAMILIA = "Familia";
 
     public static final String[] CATEGORIAS = {
-            CATEGORIA_PERSONAL, CATEGORIA_TRABAJO, CATEGORIA_ESTUDIOS, CATEGORIA_CASA
+            CATEGORIA_PERSONAL, CATEGORIA_TRABAJO, CATEGORIA_ESTUDIOS, CATEGORIA_FAMILIA
     };
 
     private long id;
@@ -57,8 +57,8 @@ public class Tarea {
             return R.drawable.ic_categoria_trabajo;
         } else if (CATEGORIA_ESTUDIOS.equals(categoria)) {
             return R.drawable.ic_categoria_estudios;
-        } else if (CATEGORIA_CASA.equals(categoria)) {
-            return R.drawable.ic_categoria_casa;
+        } else if (CATEGORIA_FAMILIA.equals(categoria)) {
+            return R.drawable.ic_categoria_familia;
         } else {
             return R.drawable.ic_categoria_personal;
         }

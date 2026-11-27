@@ -21,6 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- parentActivityName: a dónde lleva la flecha "Arriba" de la Toolbar -->
+        <activity
+            android:name=".DetalleTareaActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".EditarTareaActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

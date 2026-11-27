@@ -2,4 +2,31 @@
     <string name="app_name">Gestor de Tareas</string>
     <string name="lista_vacia">No hay tareas todavía</string>
     <string name="desc_icono_categoria">Icono de la categoría de la tarea</string>
+
+    <!-- Pantallas -->
+    <string name="titulo_nueva_tarea">Nueva tarea</string>
+    <string name="titulo_editar_tarea">Editar tarea</string>
+    <string name="titulo_detalle_tarea">Detalle de la tarea</string>
+
+    <!-- Botones y etiquetas -->
+    <string name="nueva_tarea">Nueva tarea</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="completada">Completada</string>
+    <string name="descripcion">Descripción</string>
+    <string name="categoria">Categoría</string>
+    <string name="hint_titulo">Título de la tarea</string>
+    <string name="hint_descripcion">Descripción (opcional)</string>
+    <string name="sin_descripcion">Sin descripción</string>
+
+    <!-- Mensajes -->
+    <string name="error_titulo_vacio">Por favor, escribe un título</string>
+    <string name="tarea_creada">Tarea creada</string>
+    <string name="tarea_actualizada">Tarea actualizada</string>
+    <string name="tarea_eliminada">Tarea eliminada</string>
+    <string name="tarea_no_encontrada">No se ha encontrado la tarea</string>
+    <string name="confirmar_eliminar_titulo">Eliminar tarea</string>
+    <string name="confirmar_eliminar_mensaje">¿Seguro que quieres eliminar \"%1$s\"?</string>
 </resources>

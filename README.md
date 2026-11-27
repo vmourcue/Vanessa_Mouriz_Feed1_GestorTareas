@@ -15,7 +15,7 @@ Aplicación Android desarrollada para el Ejercicio de feedback 1 de la asignatur
 - [x] Proyecto base creado (Empty Views Activity)
 - [x] Modelo de datos (`Tarea`) y acceso a base de datos (`TareasDBHelper`)
 - [x] Pantalla principal con la lista de tareas (ListView con adaptador propio)
-- [ ] Pantallas de alta/edición y detalle
+- [x] Pantallas de alta/edición y detalle
 - [ ] Menú de opciones y diálogo "Acerca de"
 - [ ] Lista de tareas completadas
 - [ ] APK descargable
