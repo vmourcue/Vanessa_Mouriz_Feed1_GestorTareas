@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Vanessa_Mouriz_Feed1_GestorTareas" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Iconos claros en la barra de estado, que queda sobre la Toolbar de color -->
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Theme.Vanessa_Mouriz_Feed1_GestorTareas" parent="Base.Theme.Vanessa_Mouriz_Feed1_GestorTareas" />

@@ -45,6 +45,24 @@ public class TareasDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
+
+        // Inserto unas tareas de ejemplo para que la lista no aparezca vacía la primera vez
+        insertarEjemplo(db, "Entregar el ejercicio de feedback",
+                "Subir el código al repositorio y generar el APK", Tarea.CATEGORIA_ESTUDIOS, false);
+        insertarEjemplo(db, "Hacer la compra",
+                "Leche, pan, fruta y verdura", Tarea.CATEGORIA_CASA, false);
+        insertarEjemplo(db, "Preparar la reunión del lunes",
+                "Revisar el estado de los proyectos", Tarea.CATEGORIA_TRABAJO, false);
+        insertarEjemplo(db, "Llamar al dentista",
+                "Pedir cita para revisión", Tarea.CATEGORIA_PERSONAL, true);
+    }
+
+    // Aquí uso el db que recibe onCreate. No puedo llamar a addTarea() porque
+    // volvería a pedir getWritableDatabase() mientras la BD se está creando.
+    private void insertarEjemplo(SQLiteDatabase db, String titulo, String descripcion,
+                                 String categoria, boolean completada) {
+        db.insert(TABLE_TAREAS, null,
+                tareaToContentValues(new Tarea(titulo, descripcion, categoria, completada)));
     }
 
     @Override

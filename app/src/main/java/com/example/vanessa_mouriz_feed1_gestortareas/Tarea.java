@@ -50,4 +50,17 @@ public class Tarea {
 
     public boolean isCompletada() { return completada; }
     public void setCompletada(boolean completada) { this.completada = completada; }
+
+    // Devuelve el icono (drawable) que corresponde a la categoría de la tarea
+    public int getIconoResId() {
+        if (CATEGORIA_TRABAJO.equals(categoria)) {
+            return R.drawable.ic_categoria_trabajo;
+        } else if (CATEGORIA_ESTUDIOS.equals(categoria)) {
+            return R.drawable.ic_categoria_estudios;
+        } else if (CATEGORIA_CASA.equals(categoria)) {
+            return R.drawable.ic_categoria_casa;
+        } else {
+            return R.drawable.ic_categoria_personal;
+        }
+    }
 }

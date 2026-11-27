@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Vanessa_Mouriz_Feed1_GestorTareas</string>
+    <string name="app_name">Gestor de Tareas</string>
+    <string name="lista_vacia">No hay tareas todavía</string>
+    <string name="desc_icono_categoria">Icono de la categoría de la tarea</string>
 </resources>
