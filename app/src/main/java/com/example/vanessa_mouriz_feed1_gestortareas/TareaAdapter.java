@@ -72,8 +72,8 @@ public class TareaAdapter extends ArrayAdapter<Tarea> {
         holder.textViewCategoria.setText(tarea.getCategoria());
 
         // Si la tarea está completada, tachamos el título con un StrikethroughSpan
-        // y lo atenuamos un poco. (Con setPaintFlags no siempre se veía la línea
-        // cuando el título era largo y se cortaba con "...")
+        // y además lo atenuamos, para que se distinga también cuando la pantalla
+        // es pequeña y la línea del tachado apenas se ve.
         if (tarea.isCompletada()) {
             SpannableString tituloTachado = new SpannableString(tarea.getTitulo());
             tituloTachado.setSpan(new StrikethroughSpan(), 0, tituloTachado.length(),

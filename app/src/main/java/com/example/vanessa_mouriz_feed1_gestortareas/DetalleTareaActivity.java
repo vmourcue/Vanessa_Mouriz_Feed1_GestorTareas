@@ -107,8 +107,8 @@ public class DetalleTareaActivity extends BaseActivity {
             return;
         }
         Intent data = result.getData();
-        if (data != null && data.hasExtra(MainActivity.EXTRA_RESULTADO)) {
-            Toast.makeText(this, data.getStringExtra(MainActivity.EXTRA_RESULTADO),
+        if (data != null && data.hasExtra(EXTRA_RESULTADO)) {
+            Toast.makeText(this, data.getStringExtra(EXTRA_RESULTADO),
                     Toast.LENGTH_SHORT).show();
         }
     }

@@ -22,6 +22,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     // Clave del extra con el que pasamos el id de una tarea entre Activities
     public static final String EXTRA_ID_TAREA = "id_tarea";
 
+    // Clave del extra con el que EditarTareaActivity devuelve el mensaje de resultado
+    public static final String EXTRA_RESULTADO = "resultado";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -78,8 +78,7 @@ public class EditarTareaActivity extends BaseActivity {
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Tarea tareaTemporal = new Tarea("", "", Tarea.CATEGORIAS[position], false);
-                imageViewIcono.setImageResource(tareaTemporal.getIconoResId());
+                imageViewIcono.setImageResource(Tarea.getIconoResId(Tarea.CATEGORIAS[position]));
             }
 
             @Override
@@ -128,7 +127,7 @@ public class EditarTareaActivity extends BaseActivity {
 
         // Devolvemos el resultado a la Activity que nos abrió
         Intent replyIntent = new Intent();
-        replyIntent.putExtra(MainActivity.EXTRA_RESULTADO, mensaje);
+        replyIntent.putExtra(EXTRA_RESULTADO, mensaje);
         setResult(Activity.RESULT_OK, replyIntent);
         finish();
     }

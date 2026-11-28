@@ -53,6 +53,12 @@ public class Tarea {
 
     // Devuelve el icono (drawable) que corresponde a la categoría de la tarea
     public int getIconoResId() {
+        return getIconoResId(categoria);
+    }
+
+    // Versión estática: devuelve el icono de una categoría sin necesidad de tener una Tarea.
+    // La uso en el Spinner de EditarTareaActivity.
+    public static int getIconoResId(String categoria) {
         if (CATEGORIA_TRABAJO.equals(categoria)) {
             return R.drawable.ic_categoria_trabajo;
         } else if (CATEGORIA_ESTUDIOS.equals(categoria)) {

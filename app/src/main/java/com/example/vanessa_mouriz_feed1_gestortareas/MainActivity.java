@@ -24,9 +24,6 @@ import java.util.ArrayList;
  */
 public class MainActivity extends BaseActivity {
 
-    // Clave del extra con el que EditarTareaActivity nos devuelve el mensaje
-    public static final String EXTRA_RESULTADO = "resultado";
-
     private ListView listViewTareas;
     private TextView textViewVacio;
     private Button buttonNuevaTarea;
