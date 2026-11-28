@@ -1,7 +1,9 @@
 package com.example.vanessa_mouriz_feed1_gestortareas;
 
 import android.content.Context;
-import android.graphics.Paint;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,16 +69,20 @@ public class TareaAdapter extends ArrayAdapter<Tarea> {
         }
 
         holder.imageViewIcono.setImageResource(tarea.getIconoResId());
-        holder.textViewTitulo.setText(tarea.getTitulo());
         holder.textViewCategoria.setText(tarea.getCategoria());
 
-        // Si la tarea está completada, tachamos el título
+        // Si la tarea está completada, tachamos el título con un StrikethroughSpan
+        // y lo atenuamos un poco. (Con setPaintFlags no siempre se veía la línea
+        // cuando el título era largo y se cortaba con "...")
         if (tarea.isCompletada()) {
-            holder.textViewTitulo.setPaintFlags(
-                    holder.textViewTitulo.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            SpannableString tituloTachado = new SpannableString(tarea.getTitulo());
+            tituloTachado.setSpan(new StrikethroughSpan(), 0, tituloTachado.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.textViewTitulo.setText(tituloTachado);
+            holder.textViewTitulo.setAlpha(0.6f);
         } else {
-            holder.textViewTitulo.setPaintFlags(
-                    holder.textViewTitulo.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.textViewTitulo.setText(tarea.getTitulo());
+            holder.textViewTitulo.setAlpha(1f);
         }
 
         // Quito el listener antes de llamar a setChecked; si no, al reutilizar
