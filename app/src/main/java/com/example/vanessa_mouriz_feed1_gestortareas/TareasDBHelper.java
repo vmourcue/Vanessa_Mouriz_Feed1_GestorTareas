@@ -135,6 +135,18 @@ public class TareasDBHelper extends SQLiteOpenHelper {
         return filas;
     }
 
+    // Borra todas las tareas completadas y devuelve cuántas se han borrado
+    public int deleteCompletadas() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int filas = db.delete(
+                TABLE_TAREAS,
+                COL_COMPLETADA + " = ?",
+                new String[]{"1"}
+        );
+        db.close();
+        return filas;
+    }
+
     // ---------- Consultas ----------
 
     // Devuelve una tarea por su id, o null si no existe

@@ -30,6 +30,14 @@
     <string name="confirmar_eliminar_titulo">Eliminar tarea</string>
     <string name="confirmar_eliminar_mensaje">¿Seguro que quieres eliminar \"%1$s\"?</string>
 
+    <!-- Tareas completadas -->
+    <string name="titulo_completadas">Tareas completadas</string>
+    <string name="ver_completadas">Ver completadas</string>
+    <string name="lista_completadas_vacia">No hay tareas completadas</string>
+    <string name="eliminar_completadas">Eliminar completadas</string>
+    <string name="confirmar_eliminar_completadas">¿Seguro que quieres eliminar todas las tareas completadas?</string>
+    <string name="completadas_eliminadas">Se han eliminado %1$d tareas</string>
+
     <!-- Acerca de -->
     <string name="acerca_de">Acerca de</string>
     <string name="aceptar">Aceptar</string>

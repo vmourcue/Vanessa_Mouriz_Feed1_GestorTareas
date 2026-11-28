@@ -17,7 +17,7 @@ Aplicación Android desarrollada para el Ejercicio de feedback 1 de la asignatur
 - [x] Pantalla principal con la lista de tareas (ListView con adaptador propio)
 - [x] Pantallas de alta/edición y detalle
 - [x] Menú de opciones, menú contextual y diálogo "Acerca de"
-- [ ] Lista de tareas completadas
+- [x] Lista de tareas completadas (otro adaptador y otro layout)
 - [ ] APK descargable
 
 ## Funcionalidades

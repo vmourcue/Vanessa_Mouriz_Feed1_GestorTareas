@@ -135,8 +135,12 @@ public class MainActivity extends BaseActivity {
     // "Acerca de" lo gestiona BaseActivity (por eso llamamos a super).
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_nueva_tarea) {
+        int id = item.getItemId();
+        if (id == R.id.action_nueva_tarea) {
             abrirNuevaTarea();
+            return true;
+        } else if (id == R.id.action_completadas) {
+            startActivity(new Intent(this, CompletadasActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
