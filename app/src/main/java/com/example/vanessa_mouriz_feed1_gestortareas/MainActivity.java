@@ -3,6 +3,11 @@ package com.example.vanessa_mouriz_feed1_gestortareas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,6 +73,9 @@ public class MainActivity extends BaseActivity {
         });
 
         buttonNuevaTarea.setOnClickListener(v -> abrirNuevaTarea());
+
+        // Menú contextual flotante al mantener pulsada una tarea
+        registerForContextMenu(listViewTareas);
     }
 
     // onResume se ejecuta cada vez que la Activity vuelve a primer plano,
@@ -81,6 +89,20 @@ public class MainActivity extends BaseActivity {
     private void cargarTareas() {
         adapter.clear();
         adapter.addAll(dbHelper.getTodasTareas());
+    }
+
+    private void abrirEditarTarea(Tarea tarea) {
+        Intent intent = new Intent(this, EditarTareaActivity.class);
+        intent.putExtra(EXTRA_ID_TAREA, tarea.getId());
+        editarTareaLauncher.launch(intent);
+    }
+
+    private void eliminarTarea(Tarea tarea) {
+        confirmarEliminar(tarea, () -> {
+            dbHelper.deleteTarea(tarea.getId());
+            Toast.makeText(this, R.string.tarea_eliminada, Toast.LENGTH_SHORT).show();
+            cargarTareas();
+        });
     }
 
     private void abrirNuevaTarea() {
@@ -98,6 +120,65 @@ public class MainActivity extends BaseActivity {
         if (data != null && data.hasExtra(EXTRA_RESULTADO)) {
             Toast.makeText(this, data.getStringExtra(EXTRA_RESULTADO), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // ---------- Menú de opciones ----------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    // Uso if/else en vez del switch de los apuntes: desde la versión 8 del plugin
+    // de Gradle los R.id no son constantes y el switch no compila.
+    // "Acerca de" lo gestiona BaseActivity (por eso llamamos a super).
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_nueva_tarea) {
+            abrirNuevaTarea();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // ---------- Menú contextual ----------
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_contextual, menu);
+
+        // Ponemos como cabecera del menú el título de la tarea pulsada
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Tarea tarea = adapter.getItem(info.position);
+        if (tarea != null) {
+            menu.setHeaderTitle(tarea.getTitulo());
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // menuInfo nos dice en qué posición de la lista se hizo la pulsación larga
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if (info == null) {
+            return super.onContextItemSelected(item);
+        }
+        Tarea tarea = adapter.getItem(info.position);
+        if (tarea == null) {
+            return super.onContextItemSelected(item);
+        }
+
+        int id = item.getItemId();
+        if (id == R.id.context_editar) {
+            abrirEditarTarea(tarea);
+            return true;
+        } else if (id == R.id.context_eliminar) {
+            eliminarTarea(tarea);
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override

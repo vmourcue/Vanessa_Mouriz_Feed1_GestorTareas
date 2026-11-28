@@ -3,6 +3,8 @@ package com.example.vanessa_mouriz_feed1_gestortareas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -130,6 +131,23 @@ public class EditarTareaActivity extends BaseActivity {
         replyIntent.putExtra(MainActivity.EXTRA_RESULTADO, mensaje);
         setResult(Activity.RESULT_OK, replyIntent);
         finish();
+    }
+
+    // ---------- Menú de opciones ----------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_editar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_guardar) {
+            guardarTarea();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -29,4 +29,9 @@
     <string name="tarea_no_encontrada">No se ha encontrado la tarea</string>
     <string name="confirmar_eliminar_titulo">Eliminar tarea</string>
     <string name="confirmar_eliminar_mensaje">¿Seguro que quieres eliminar \"%1$s\"?</string>
+
+    <!-- Acerca de -->
+    <string name="acerca_de">Acerca de</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="acerca_de_mensaje">Versión %1$s\n\nAplicación para gestionar tareas: crear, editar, marcar como completadas y eliminar.\n\nDesarrollada por Vanessa Mouriz para la asignatura Programación dirigida por eventos (Grado en Ingeniería Informática, UAX).</string>
 </resources>

@@ -3,6 +3,8 @@ package com.example.vanessa_mouriz_feed1_gestortareas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -12,7 +14,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 
 /**
  * Activity que muestra el detalle de una tarea.
@@ -65,7 +66,7 @@ public class DetalleTareaActivity extends BaseActivity {
         });
 
         buttonEditar.setOnClickListener(v -> editarTarea());
-        buttonEliminar.setOnClickListener(v -> confirmarEliminar());
+        buttonEliminar.setOnClickListener(v -> eliminarTarea());
     }
 
     // Cargamos la tarea en onResume para que, al volver de editarla, se vea actualizada
@@ -112,18 +113,36 @@ public class DetalleTareaActivity extends BaseActivity {
         }
     }
 
-    // Diálogo de confirmación antes de borrar (AlertDialog con botón positivo y negativo)
-    private void confirmarEliminar() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle(R.string.confirmar_eliminar_titulo);
-        alertDialog.setMessage(getString(R.string.confirmar_eliminar_mensaje, tarea.getTitulo()));
-        alertDialog.setPositiveButton(R.string.eliminar, (dialog, which) -> {
+    // Pide confirmación con un diálogo (está en BaseActivity) y, si se acepta, borra la tarea
+    private void eliminarTarea() {
+        confirmarEliminar(tarea, () -> {
             dbHelper.deleteTarea(idTarea);
             Toast.makeText(this, R.string.tarea_eliminada, Toast.LENGTH_SHORT).show();
             finish();
         });
-        alertDialog.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.dismiss());
-        alertDialog.show();
+    }
+
+    // ---------- Menú de opciones ----------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detalle, menu);
+        return true;
+    }
+
+    // Uso if/else en vez del switch de los apuntes: desde la versión 8 del plugin
+    // de Gradle los R.id no son constantes y el switch no compila.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_editar) {
+            editarTarea();
+            return true;
+        } else if (id == R.id.action_eliminar) {
+            eliminarTarea();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

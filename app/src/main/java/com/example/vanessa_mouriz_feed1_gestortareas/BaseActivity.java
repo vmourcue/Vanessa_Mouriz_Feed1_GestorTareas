@@ -1,7 +1,10 @@
 package com.example.vanessa_mouriz_feed1_gestortareas;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -57,5 +60,46 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    // La opción "Acerca de" está en el menú de todas las pantallas, así que la
+    // gestiono aquí. Cada Activity gestiona sus propias opciones y llama a super.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_acerca_de) {
+            mostrarAcercaDe();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Diálogo "Acerca de" con la versión de la app
+    protected void mostrarAcercaDe() {
+        String version;
+        try {
+            version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            version = "1.0";
+        }
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.app_name);
+        alertDialog.setIcon(R.mipmap.ic_launcher);
+        alertDialog.setMessage(getString(R.string.acerca_de_mensaje, version));
+        alertDialog.setPositiveButton(R.string.aceptar, (dialog, which) -> dialog.dismiss());
+        alertDialog.show();
+    }
+
+    /**
+     * Diálogo de confirmación antes de eliminar una tarea.
+     * Si el usuario acepta, se ejecuta accionEliminar.
+     */
+    protected void confirmarEliminar(Tarea tarea, Runnable accionEliminar) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(R.string.confirmar_eliminar_titulo);
+        alertDialog.setMessage(getString(R.string.confirmar_eliminar_mensaje, tarea.getTitulo()));
+        alertDialog.setPositiveButton(R.string.eliminar, (dialog, which) -> accionEliminar.run());
+        alertDialog.setNegativeButton(R.string.cancelar, (dialog, which) -> dialog.dismiss());
+        alertDialog.show();
     }
 }
